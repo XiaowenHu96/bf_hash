@@ -1,4 +1,4 @@
-BF file: `pearson.b`.
+BF file: `pearson.b`， source file: `pearson.asm`.
 
 Example:
 ```
