@@ -297,22 +297,21 @@ db $(0x16)
 ; print number in r1 in hex format
 @print_number
     push r1
-    push r2
-    push r3
-    mov r2, $(0x10)
-    mov r3, r1 
+    ^push r2
+    ^push r3
+    mov r2, r1 
     @l1
-        mov r1, r3
-        div r1, r2
+        band r1, $(0xf0)
+        shr r1, 4
         $(put_digit("r1"))
-        mul r1, r2
-        sub r3, r1
-        div r2, 16
-        ceq r2, 0
+        shl r2, 4
+        mov r1, r2
+        inc r3
+        ceq r3, 2       ; note: num of digits to print, needs change based on address size.
         cjz %l1
     out 10
-    pop r3
     pop r2
+    pop r3
     pop r1
     ret
 
