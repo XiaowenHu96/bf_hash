@@ -1,0 +1,6 @@
+[submodule "brainfix"]
+	path = brainfix
+	url = https://github.com/jorenheit/brainfix.git
+[submodule "asmbf"]
+	path = asmbf
+	url = https://github.com/kspalaiologos/asmbf.git
