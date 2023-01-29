@@ -25,5 +25,5 @@ mov r1, $(0xaabb1122)
         shl r2, 4
         mov r1, r2
         inc r3
-        ceq r3, 4
+        ceq r3, 8
         cjz %l1
