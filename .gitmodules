@@ -4,3 +4,6 @@
 [submodule "asmbf"]
 	path = asmbf
 	url = https://github.com/kspalaiologos/asmbf.git
+[submodule "zkbrainfuck"]
+	path = zkbrainfuck
+	url = https://github.com/mohanson/zkbrainfuck.git

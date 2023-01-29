@@ -1,3 +1,4 @@
+[bits 16]
 stk 10
 
 $(
@@ -278,7 +279,7 @@ db $(0x16)
 
 #call("main")
 
-; print user input
+; print user input (note: not avaiable on 8bits machine)
 @print_user_input
     mov r1, *INPUT_STR
     clr r3
@@ -322,11 +323,39 @@ db $(0x16)
         rcl r1, r2
 #call("print_number")
         inc r2
-        cge r2, *T_END
+        ceq r2, 255 ; note: cannot use T_END if on 8-bits machine (T_END = 256)
         cjz %loop
     clr r2
     clr r1
+#call("end_program")
 
+; note: 8bits version
+;@main
+;    ;read input str and hash rightaway
+;    clr r3  ; ctr
+;    clr r4  ; hash
+;    clr r5  ; T idx
+;    @lo1
+;        in r2       ; read byte
+;        ceq r2, 10  ; stop at newline
+;        cjn %lo1_end
+;        bxor r5, r2 ; idx = hash ^ byte
+;        mov r2, *T
+;        add r2, r5
+;        rcl r4, r2  ; hash = T[idx]
+;        mov r5, r4
+;        inc r3      ; ctr ++
+;        ceq r3, 64
+;        cjz %lo1
+;    @lo1_end
+;out .0
+;out .X
+;mov r1, r4
+;#call("print_number")
+
+
+
+; note: This main function is only valid under 16-bits machine or bigger
 @main
     ; read input str
     mov r1, *INPUT_STR
@@ -363,3 +392,4 @@ mov r1, r4
 out .0
 out .X
 #call("print_number")
+@end_program
