@@ -328,67 +328,67 @@ db $(0x16)
     clr r1
 #call("end_program")
 
-; note: 8bits version
-;@main
-;    ;read input str and hash rightaway
-;    clr r3  ; ctr
-;    clr r4  ; hash
-;    clr r5  ; T idx
-;    @lo1
-;        in r2       ; read byte
-;        ceq r2, 10  ; stop at newline
-;        cjn %lo1_end
-;        bxor r5, r2 ; idx = hash ^ byte
-;        mov r2, *T
-;        add r2, r5
-;        rcl r4, r2  ; hash = T[idx]
-;        mov r5, r4
-;        inc r3      ; ctr ++
-;        ceq r3, 64
-;        cjz %lo1
-;    @lo1_end
-;out .0
-;out .X
-;mov r1, r4
-;#call("print_number")
+@main
+    ;read input str and hash rightaway
+    clr r3  ; ctr
+    clr r4  ; hash
+    clr r5  ; T idx
+    @lo1
+        in r2       ; read byte
+        ceq r2, 10  ; stop at newline
+        cjn %lo1_end
+        bxor r5, r2 ; idx = hash ^ byte
+        mov r2, *T
+        add r2, r5
+        rcl r4, r2  ; hash = T[idx]
+        mov r5, r4
+        inc r3      ; ctr ++
+        ceq r3, 64
+        cjz %lo1
+    @lo1_end
+out .0
+out .X
+mov r1, r4
+#call("print_number")
+ @end_program
 
 
 
 ; note: This main function is only valid under 16-bits machine or bigger
-@main
-    ; read input str
-    mov r1, *INPUT_STR
-    @read_loop
-        in r2
-        sto r1, r2
-        inc r1
-        inc r3
-        ceq r2, 10
-        cjn %read_end
-        cge r3, 64
-        cjz %read_loop
-    @read_end
-    ; hash
-    mov r1, *INPUT_STR
-    clr r3 ; ctr
-    clr r4 ; hash
-    clr r5 ; T idx
-    @hash_loop
-        rcl r2, r1
-        ceq r2, 10
-        cjn %hash_end
-        bxor r5, r2 ; idx = hash ^ b
-        mov r2, *T
-        add r2, r5
-        rcl r4, r2 ; hash = T[idx]
-        mov r5, r4
-        inc r1  ; INPUT_STR++
-        inc r3  ; ctr ++
-        cge r3, 64
-        cjz %hash_loop
-    @hash_end
-mov r1, r4
-out .0
-out .X
-#call("print_number")
-@end_program
+; Too slow
+; @main
+;     ; read input str
+;     mov r1, *INPUT_STR
+;     @read_loop
+;         in r2
+;         sto r1, r2
+;         inc r1
+;         inc r3
+;         ceq r2, 10
+;         cjn %read_end
+;         cge r3, 64
+;         cjz %read_loop
+;     @read_end
+;     ; hash
+;     mov r1, *INPUT_STR
+;     clr r3 ; ctr
+;     clr r4 ; hash
+;     clr r5 ; T idx
+;     @hash_loop
+;         rcl r2, r1
+;         ceq r2, 10
+;         cjn %hash_end
+;         bxor r5, r2 ; idx = hash ^ b
+;         mov r2, *T
+;         add r2, r5
+;         rcl r4, r2 ; hash = T[idx]
+;         mov r5, r4
+;         inc r1  ; INPUT_STR++
+;         inc r3  ; ctr ++
+;         cge r3, 64
+;         cjz %hash_loop
+;     @hash_end
+; mov r1, r4
+; out .0
+; out .X
+; #call("print_number")
